@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "exported_at": "2026-08-24T16:03:16+00:00",
+  "movie_count": 772,
+  "files": [
+    "catalog.json",
+    "stats.json"
+  ]
+}

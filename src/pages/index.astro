@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getStats } from "../lib/catalog";
+
+const stats = getStats();
+const number = new Intl.NumberFormat("en");
+const movieCount = number.format(stats.movie_count);
+const availableCount = number.format(stats.available_movie_count);
+const yearSpan =
+  stats.year_min !== null && stats.year_max !== null
+    ? `${stats.year_min}–${stats.year_max}`
+    : "Not published";
+---
+
+<BaseLayout
+  title="Cultural Archive"
+  description="A personal cultural archive. Film is the first collection."
+>
+  <h1>Cultural Archive</h1>
+  <p>
+    A personal cultural archive for presenting films with care. Film is the
+    first published collection.
+  </p>
+  <h2>Collection snapshot</h2>
+  <p>
+    These figures come from the public catalog snapshot. They describe the
+    collection, not a streaming library.
+  </p>
+  <dl class="stat-list">
+    <div>
+      <dt>Films in the catalog</dt>
+      <dd>{movieCount}</dd>
+    </div>
+    <div>
+      <dt>Currently available</dt>
+      <dd>{availableCount}</dd>
+    </div>
+    <div>
+      <dt>Year span</dt>
+      <dd>{yearSpan}</dd>
+    </div>
+  </dl>
+  <p><a href="/about/">About this archive</a></p>
+</BaseLayout>

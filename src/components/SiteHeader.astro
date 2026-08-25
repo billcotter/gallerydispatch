@@ -1,0 +1,76 @@
+---
+const pathname = Astro.url.pathname;
+const homeCurrent = pathname === "/";
+const aboutCurrent = pathname === "/about" || pathname === "/about/";
+---
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <p class="site-brand">
+      <a href="/">Cultural Archive</a>
+    </p>
+    <nav>
+      <ul>
+        <li>
+          <a href="/" aria-current={homeCurrent ? "page" : undefined}>Home</a>
+        </li>
+        <li>
+          <a
+            href="/about/"
+            aria-current={aboutCurrent ? "page" : undefined}
+          >
+            About
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .site-header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    width: min(calc(var(--measure) + 8rem), 100%);
+    margin-inline: auto;
+    padding: var(--space-3) var(--page-gutter);
+  }
+
+  .site-brand {
+    font-weight: 650;
+    letter-spacing: 0.01em;
+  }
+
+  .site-brand a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    padding-block: var(--space-1);
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a[aria-current="page"] {
+    border-bottom-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+</style>

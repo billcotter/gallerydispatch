@@ -1,0 +1,31 @@
+---
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="site-footer">
+  <p>A personal cultural archive. Film is the first published collection.</p>
+  <p>
+    <small>Working title. © {year}</small>
+  </p>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-4) var(--page-gutter);
+    color: var(--color-text-muted);
+  }
+
+  .site-footer p {
+    width: min(var(--measure), 100%);
+    margin-inline: auto;
+  }
+
+  .site-footer p + p {
+    margin-top: var(--space-2);
+  }
+
+  small {
+    font-size: 0.9rem;
+  }
+</style>

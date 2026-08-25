@@ -1,0 +1,433 @@
+{
+  "schema_version": 1,
+  "stats": {
+    "movie_count": 772,
+    "available_movie_count": 747,
+    "unavailable_movie_count": 25,
+    "available_copy_count": 751,
+    "year_min": 1920,
+    "year_max": 2026,
+    "genres": [
+      {
+        "name": "Drama",
+        "count": 603
+      },
+      {
+        "name": "Romance",
+        "count": 178
+      },
+      {
+        "name": "Crime",
+        "count": 166
+      },
+      {
+        "name": "Thriller",
+        "count": 161
+      },
+      {
+        "name": "Comedy",
+        "count": 152
+      },
+      {
+        "name": "Mystery",
+        "count": 76
+      },
+      {
+        "name": "History",
+        "count": 48
+      },
+      {
+        "name": "War",
+        "count": 43
+      },
+      {
+        "name": "Fantasy",
+        "count": 39
+      },
+      {
+        "name": "Horror",
+        "count": 39
+      },
+      {
+        "name": "Science Fiction",
+        "count": 37
+      },
+      {
+        "name": "Music",
+        "count": 23
+      },
+      {
+        "name": "Adventure",
+        "count": 21
+      },
+      {
+        "name": "Documentary",
+        "count": 19
+      },
+      {
+        "name": "Action",
+        "count": 13
+      },
+      {
+        "name": "Animation",
+        "count": 13
+      },
+      {
+        "name": "Family",
+        "count": 7
+      },
+      {
+        "name": "Western",
+        "count": 5
+      },
+      {
+        "name": "TV Movie",
+        "count": 3
+      }
+    ],
+    "original_languages": [
+      {
+        "name": "en",
+        "count": 350
+      },
+      {
+        "name": "fr",
+        "count": 126
+      },
+      {
+        "name": "it",
+        "count": 47
+      },
+      {
+        "name": "ja",
+        "count": 47
+      },
+      {
+        "name": "pl",
+        "count": 36
+      },
+      {
+        "name": "sv",
+        "count": 30
+      },
+      {
+        "name": "de",
+        "count": 25
+      },
+      {
+        "name": "es",
+        "count": 17
+      },
+      {
+        "name": "ru",
+        "count": 15
+      },
+      {
+        "name": "ko",
+        "count": 8
+      },
+      {
+        "name": "bn",
+        "count": 6
+      },
+      {
+        "name": "cs",
+        "count": 6
+      },
+      {
+        "name": "da",
+        "count": 5
+      },
+      {
+        "name": "fa",
+        "count": 5
+      },
+      {
+        "name": "hu",
+        "count": 4
+      },
+      {
+        "name": "ro",
+        "count": 4
+      },
+      {
+        "name": "tr",
+        "count": 4
+      },
+      {
+        "name": "zh",
+        "count": 4
+      },
+      {
+        "name": "fi",
+        "count": 3
+      },
+      {
+        "name": "pt",
+        "count": 3
+      },
+      {
+        "name": "sr",
+        "count": 3
+      },
+      {
+        "name": "cn",
+        "count": 2
+      },
+      {
+        "name": "el",
+        "count": 2
+      },
+      {
+        "name": "sh",
+        "count": 2
+      },
+      {
+        "name": "ar",
+        "count": 1
+      },
+      {
+        "name": "ga",
+        "count": 1
+      },
+      {
+        "name": "hi",
+        "count": 1
+      },
+      {
+        "name": "hy",
+        "count": 1
+      },
+      {
+        "name": "ka",
+        "count": 1
+      },
+      {
+        "name": "no",
+        "count": 1
+      },
+      {
+        "name": "sk",
+        "count": 1
+      }
+    ],
+    "production_countries": [
+      {
+        "name": "United States of America",
+        "count": 263
+      },
+      {
+        "name": "France",
+        "count": 196
+      },
+      {
+        "name": "United Kingdom",
+        "count": 131
+      },
+      {
+        "name": "Italy",
+        "count": 88
+      },
+      {
+        "name": "Germany",
+        "count": 59
+      },
+      {
+        "name": "Japan",
+        "count": 54
+      },
+      {
+        "name": "Sweden",
+        "count": 43
+      },
+      {
+        "name": "Poland",
+        "count": 41
+      },
+      {
+        "name": "Soviet Union",
+        "count": 15
+      },
+      {
+        "name": "Denmark",
+        "count": 14
+      },
+      {
+        "name": "Switzerland",
+        "count": 11
+      },
+      {
+        "name": "Canada",
+        "count": 10
+      },
+      {
+        "name": "Mexico",
+        "count": 10
+      },
+      {
+        "name": "Belgium",
+        "count": 9
+      },
+      {
+        "name": "Finland",
+        "count": 9
+      },
+      {
+        "name": "Netherlands",
+        "count": 9
+      },
+      {
+        "name": "South Korea",
+        "count": 9
+      },
+      {
+        "name": "Austria",
+        "count": 7
+      },
+      {
+        "name": "Czechoslovakia",
+        "count": 7
+      },
+      {
+        "name": "India",
+        "count": 7
+      },
+      {
+        "name": "Norway",
+        "count": 7
+      },
+      {
+        "name": "Spain",
+        "count": 7
+      },
+      {
+        "name": "Hungary",
+        "count": 6
+      },
+      {
+        "name": "Iran",
+        "count": 6
+      },
+      {
+        "name": "Turkey",
+        "count": 6
+      },
+      {
+        "name": "Hong Kong",
+        "count": 5
+      },
+      {
+        "name": "Yugoslavia",
+        "count": 5
+      },
+      {
+        "name": "Greece",
+        "count": 4
+      },
+      {
+        "name": "Romania",
+        "count": 4
+      },
+      {
+        "name": "Algeria",
+        "count": 3
+      },
+      {
+        "name": "Argentina",
+        "count": 3
+      },
+      {
+        "name": "Brazil",
+        "count": 3
+      },
+      {
+        "name": "China",
+        "count": 3
+      },
+      {
+        "name": "Russia",
+        "count": 3
+      },
+      {
+        "name": "Cuba",
+        "count": 2
+      },
+      {
+        "name": "Czech Republic",
+        "count": 2
+      },
+      {
+        "name": "Portugal",
+        "count": 2
+      },
+      {
+        "name": "Taiwan",
+        "count": 2
+      },
+      {
+        "name": "Australia",
+        "count": 1
+      },
+      {
+        "name": "Bosnia and Herzegovina",
+        "count": 1
+      },
+      {
+        "name": "Iceland",
+        "count": 1
+      },
+      {
+        "name": "Ireland",
+        "count": 1
+      },
+      {
+        "name": "Lebanon",
+        "count": 1
+      },
+      {
+        "name": "Luxembourg",
+        "count": 1
+      },
+      {
+        "name": "Netherlands Antilles",
+        "count": 1
+      },
+      {
+        "name": "Serbia and Montenegro",
+        "count": 1
+      }
+    ],
+    "video_codecs": [
+      {
+        "name": "h264",
+        "count": 500
+      },
+      {
+        "name": "hevc",
+        "count": 240
+      },
+      {
+        "name": "mpeg4",
+        "count": 9
+      },
+      {
+        "name": "av1",
+        "count": 2
+      }
+    ],
+    "hdr": [
+      {
+        "name": "No HDR classification",
+        "count": 731
+      },
+      {
+        "name": "dolby_vision",
+        "count": 16
+      },
+      {
+        "name": "hdr10",
+        "count": 4
+      }
+    ]
+  }
+}
