@@ -4,8 +4,13 @@ This is a static cultural-archive website. Film JSON is consumed from
 the sibling `movie-catalog` public publish contract only.
 
 Do not add React, Vue, Svelte, Tailwind, SSR adapters, SQLite, or
-private catalog artifacts. See `PROJECT-VISION.md` and
-`docs/architecture.md`.
+private catalog artifacts. See `PROJECT-VISION.md`,
+`docs/architecture.md`, and `docs/trajectory.md` for future-direction
+context.
+
+Linked Astro and Tailwind documentation below is upstream reference
+material. It is not permission to add a UI framework, Tailwind, SSR, or
+content collections unless a milestone explicitly changes the stack.
 
 ## Development
 

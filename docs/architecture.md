@@ -2,8 +2,9 @@
 
 This is the current technical architecture for the cultural-archive
 website. Purpose and curatorial principles live in
-[`PROJECT-VISION.md`](../PROJECT-VISION.md). Wave-specific work lives
-in [`docs/milestones/`](milestones/).
+[`PROJECT-VISION.md`](../PROJECT-VISION.md). Direction of travel lives
+in [`docs/trajectory.md`](trajectory.md). Wave-specific work lives in
+[`docs/milestones/`](milestones/).
 
 Working repository name: `cultural-archive-web`. Public site name is
 not chosen yet.
@@ -81,14 +82,15 @@ scaffold). Production builds do not read the Python repository.
 
 ## Site shape
 
-Astro, TypeScript, `output: 'static'`. No adapter, no SSR, no React /
-Vue / Svelte, no Tailwind, no CMS, no API server.
+Astro, TypeScript, `output: 'static'`. Package manager: pnpm
+(`packageManager` in `package.json` is `pnpm@10.33.0`). No adapter, no
+SSR, no React / Vue / Svelte, no Tailwind, no CMS, no API server.
 
 v1 Film routes (later waves; not all exist in W1):
 
 | Route | Role |
 | --- | --- |
-| `/` | Platform home |
+| `/` | Home (W1: contract-proof public stats snapshot, not the long-term editorial homepage) |
 | `/about/` | Purpose and collection facts |
 | `/movies/` | Film browse (W2) |
 | `/movies/[slug]/` | Film detail (W2) |

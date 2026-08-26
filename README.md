@@ -9,7 +9,8 @@ This repository is the website. It is not the catalog.
 - Website input: `movie-catalog/exports/web/public/` only
 - Vision: [`PROJECT-VISION.md`](PROJECT-VISION.md)
 - Architecture: [`docs/architecture.md`](docs/architecture.md)
-- Current wave: [`docs/milestones/W1.md`](docs/milestones/W1.md)
+- Trajectory: [`docs/trajectory.md`](docs/trajectory.md)
+- W1 (complete): [`docs/milestones/W1.md`](docs/milestones/W1.md)
 
 Working title: Cultural Archive. Public name is not final.
 
@@ -48,5 +49,7 @@ filenames.
 
 ## W1 status
 
-Checkpoint 3 in progress: accessible Home/About shell. Film browse is
-not in this wave.
+W1 is complete: static Astro foundation, public JSON validation/sync,
+accessible Home/About shell, no client JavaScript. Film browse is not
+in this wave. See [`docs/trajectory.md`](docs/trajectory.md) for
+direction after W1.

@@ -3,17 +3,31 @@
 The website is a personal cultural archive and a professional
 web-curation platform.
 
-It exists to present cultural material with care, to keep a durable
-public record of a collection, and to practice website stewardship at a
-standard that would be defensible in a museum, library, archive, or
-university setting.
+It exists to select, organize, connect, interpret, and publish cultural
+works — not to mirror an inventory. It should also practice website
+stewardship at a standard that would be defensible in a museum,
+library, archive, or university setting.
 
 Film is the first collection. It is not the permanent scope of the
 platform.
 
 This document states purpose, values, and enduring boundaries.
-Implementation detail belongs in architecture notes, ADRs, and
+Current technical facts live in `docs/architecture.md`. Direction of
+travel lives in `docs/trajectory.md`. Implementation waves live in
 milestone documents.
+
+---
+
+## How to read related documents
+
+- **CURRENT** — implemented, or an authoritative contract already in
+  force.
+- **DIRECTION** — a trajectory we intend to preserve, not yet built.
+- **CANDIDATE** — a pattern or technology worth evaluating later.
+- **DEFERRED** — a decision intentionally not made.
+
+This vision stays durable. It does not name providers, lock schemas, or
+schedule tickets.
 
 ---
 
@@ -21,9 +35,14 @@ milestone documents.
 
 The platform should:
 
-1. Present a serious, ongoing engagement with the arts.
+1. Present a serious, ongoing engagement with the arts through
+   selection, organization, connection, interpretation, and
+   publication.
 2. Make cultural material curated, accessible, and discoverable.
-3. Demonstrate website management and digital-curation practice.
+3. Demonstrate website management and digital-curation practice,
+   including collection development, metadata, taxonomy, information
+   architecture, provenance, rights awareness, editorial judgment,
+   cultural relationships, and digital stewardship.
 4. Demonstrate sound architecture: semantic HTML, accessibility, SEO,
    performance, privacy, maintainability, and durable public contracts.
 5. Serve as a structured learning project for thinking like a website
@@ -34,8 +53,9 @@ professional skill. Those qualities can later serve as portfolio
 evidence. Professional demonstration is an outcome, not the
 visitor-facing identity.
 
-Do not architect this as a résumé site, portfolio website, or
-showcase-first product. Avoid “enterprise-grade” language.
+Do not architect this as a résumé site, portfolio website, inventory
+dashboard, or showcase-first product. Avoid “enterprise-grade”
+language.
 
 Success is not “pages exist.” Success is that a visitor can understand
 the collection, and that a professional reader can see why the site is
@@ -76,12 +96,13 @@ Do not assume expert knowledge. Do not oversimplify cultural content.
 
 ## What this is not
 
-This is not a media server, streaming product, admin dashboard, CMS, or
-recommendation engine.
+This is not a media server, streaming product, admin dashboard, CMS,
+recommendation engine, or a complete inventory of everything owned.
 
-v1 does not implement Art, Theater, Books, or Publications. Those
-domains are named so Film work does not trap the platform in a
-movie-shaped design.
+v1 implements Film as the first collection only. Music, Books, Art, and
+Publications are named so Film work does not trap the platform in a
+movie-shaped design. Theater is deferred; it is not assumed as the next
+collection.
 
 ---
 
@@ -110,10 +131,17 @@ That snapshot is a disposable public contract. The catalog can be
 republished. The website must not treat the JSON files as a second
 source of truth.
 
+**CURRENT:** `schema_version` 1 publishes cataloged films. That is the
+valid build input today.
+
+**DIRECTION:** public Film membership should become an explicit
+curatorial selection, not an automatic copy of ownership, watch state,
+or personal rating.
+
 ### Future collections
 
-Art, Theater, Books, and Publications may arrive from other publishers
-or data sources. The web platform should unify navigation and
+Music, Books, Art, and Publications may arrive from other publishers or
+data sources. The web platform should unify navigation and
 presentation. It should not force every collection into a movie-shaped
 backend schema.
 
@@ -152,7 +180,7 @@ cannot communicate the required role, state, or relationship.
 Do not add redundant roles to `<header>`, `<nav>`, `<main>`,
 `<footer>`, or `<button>`.
 
-Design accessibility into the shell from W1. W5 verifies and
+Design accessibility into the shell from W1. Later verification
 remediates; it does not introduce landmarks, skip links, or focus
 styles for the first time.
 
@@ -164,6 +192,10 @@ structured data, and internal links that help humans.
 
 SEO should follow information architecture and clarity. Do not generate
 thin taxonomy pages or routes merely because a database facet exists.
+
+Taxonomy may be editorial as well as organizational: a landing can
+carry context and still offer complete browsing. That is not the same
+as a required global `/archive/` route.
 
 Where provenance or uncertainty matters to understanding, make it
 visible rather than smoothing it away.
@@ -179,15 +211,14 @@ dimensions or aspect ratios, and low layout shift.
 > Performance is part of visitor experience and long-term web
 > stewardship, not a vanity score.
 
-W1 should establish measurable budgets. Exact numbers live in
-architecture and milestone documents so this vision does not go stale.
-Regressions should be reviewed, not hidden.
+Measurable budgets live in architecture and milestone documents so this
+vision does not go stale. Regressions should be reviewed, not hidden.
 
 ### 4. Curatorially extensible
 
 Film is first. The global shell, navigation, design tokens, editorial
 patterns, metadata presentation, accessibility system, and taxonomy
-approach should later support Art, Theater, Books, and Publications
+approach should later support Music, Books, Art, and Publications
 without flattening their differences.
 
 Share platform patterns where they are genuinely common. Use
@@ -217,13 +248,17 @@ Known, unknown, missing, inferred, externally sourced, and editorially
 supplied are different states. The website should not silently
 transform one into another.
 
+Owned, watched, liked, rated, and selected are also different states.
+They must not be treated as equivalent.
+
 Illustrative, not a catalog of movie-catalog internals: missing HDR
 classification is not automatically SDR; missing language is not
 invented; unavailable does not mean deleted; unprobed does not mean
-bad; a third-party rating is not the site owner’s rating.
+bad; a third-party rating is not the site owner’s rating; a high
+personal rating is not automatic archive selection.
 
 The same honesty applies later to art provenance, uncertain dates,
-authorship, editions, theater productions, and publications.
+authorship, editions, and publications.
 
 Distinguish:
 
@@ -232,9 +267,49 @@ Distinguish:
 - operator information
 - visitor-facing context
 
+These editorial emphases are not synonyms:
+
+- **Featured** — intentional emphasis, independent of chronology.
+- **Latest** — chronological editorial publication (for Dispatches).
+- **Recently added** — recently added to a collection.
+- **From the Archive** — deliberately resurfaced older material.
+- **Popular** — audience attention, if evidence later exists.
+
+Analytics may inform website-management and discovery questions. They
+never determine cultural significance, Featured, or From the Archive.
+
 Technical copy details support the Film archive. They must not dominate
 film interpretation. Copies are not ranked. Unavailable films remain
 legitimate public records, not broken pages.
+
+---
+
+## External metadata and curator-owned decisions
+
+External datasets can supply factual metadata and reduce clerical work.
+They do not perform curation.
+
+Curator-owned responsibilities include whether a work belongs in the
+archive, how it is related, how taxonomy is presented, what is
+emphasized, and what is written interpretively.
+
+Do not call third-party APIs as live page-render dependencies. Prefer
+collection-specific acquisition, then a public snapshot, then the
+static site.
+
+---
+
+## Dispatches
+
+**DIRECTION:** an editorial layer called Dispatches — reviews, notes,
+essays, reflections, concert or exhibition responses, and
+cross-collection writing.
+
+Structured records provide breadth. Dispatches provide voice and
+depth. A Dispatch may relate to one work or many.
+
+Dispatches are not required for Film browse. They are not a CMS
+commitment.
 
 ---
 
@@ -246,7 +321,8 @@ legitimate public records, not broken pages.
 Evaluate against accessibility, semantics, privacy, maintainability,
 documentation, progressive enhancement, performance, responsible
 third-party metadata, content governance, provenance, honest
-uncertainty, audience diversity, and long-term stewardship.
+uncertainty, audience diversity, rights awareness, and long-term
+stewardship.
 
 The site need not look like an institutional template. It should
 demonstrate institutional-quality reasoning.
@@ -268,9 +344,9 @@ should be documented as dependencies and stewardship risks, not hidden.
 
 ## Public and private data
 
-Public, intentionally:
+Public, intentionally (CURRENT contract):
 
-- catalog membership
+- catalog membership as published in `schema_version` 1
 - film metadata suitable for a public archive
 - logical availability
 - approved anonymous technical copy summaries
@@ -286,8 +362,9 @@ Private:
 - enrichment operations and scan history
 - credentials and backups
 
-Public collection ownership is a deliberate publishing choice.
-Operational infrastructure stays private.
+Public collection presentation is a publishing choice. Operational
+infrastructure stays private. Watched and rated state remain private
+and are not a substitute for selection.
 
 Third-party metadata, especially TMDB, must be attributed and not
 presented as original cataloguing by this site. Re-verify TMDB terms
@@ -297,12 +374,16 @@ when implementing attribution.
 
 ## Film v1
 
-Film is the first concrete collection.
+Film is the first concrete collection and the reference implementation
+for later domains.
 
-v1 should emphasize poster-forward browsing; title and year; overview;
-genre; country; language; runtime; TMDB/IMDb references; collection
-availability; restrained technical copy summaries; genre and country
-discovery; and public statistics.
+The first Film experience should emphasize poster-forward browsing;
+title and year; overview; genre; country; language; runtime; TMDB/IMDb
+references; collection availability; restrained technical copy
+summaries; genre and country discovery; and public statistics.
+
+The current public snapshot is a valid membership set for that
+implementation. It is not the permanent definition of public Film.
 
 Do not describe the site as a media server. Do not add director browse
 until directors exist in the public contract. Do not invent “recently
@@ -315,26 +396,29 @@ Collections navigation does not require rewriting permalinks.
 
 ## Future collections
 
-Not in v1. Named so the shell stays honest.
+Not in v1. Named so the shell stays honest. These are sketches, not
+schemas:
 
-Possible later concepts, not schemas:
+- **Film:** films, and later possibly directors, countries, languages,
+  genres, periods
+- **Music:** composers, works, recordings, performers, ensembles,
+  conductors, releases, periods or forms
+- **Books:** works, editions, authors, fiction/nonfiction, genres or
+  forms, subjects, periods
+- **Art:** artworks, artists, institutions, exhibitions, media,
+  movements, periods
+- **Publications:** left undefined until the actual use is clearer
 
-- **Art:** creator, date, medium, dimensions, institution, rights,
-  provenance
-- **Theater:** production, venue, dates, playwright, director, cast,
-  company
-- **Books:** author, edition, publisher, date, ISBN, subjects
-- **Publications:** author/editor, publication title, issue, date,
-  type, external link
+Theater may be reconsidered later. It is not a primary next collection.
 
 When a second collection exists, add it as its own model and publisher
-contract. Do not stretch Film JSON to pretend it is art.
+contract. Do not stretch Film JSON to pretend it is music or art.
 
 ---
 
 ## Site identity and navigation
 
-A final public name is not chosen here and should not block W1.
+A final public name is not chosen here.
 
 The name should eventually support several cultural domains; should not
 imply streaming or a media server; should be distinct from
@@ -342,31 +426,22 @@ imply streaming or a media server; should be distinct from
 credible in a professional or cultural context without becoming a
 résumé brand.
 
-v1 navigation (no dead links):
+W1 navigation (no dead links):
 
 ```text
 Home
-Film
 About
 ```
 
-W1 ships Home and About only. Film is added when `/movies/` exists.
+Film is added when `/movies/` exists.
 
-Possible later navigation, only when a second collection exists:
+Later navigation lists only collections that actually exist. Do not
+create empty Music, Books, Art, or Publications links.
 
-```text
-Home
-Collections
-  Film
-  Art
-  Theater
-  Books
-  Publications
-Explore
-About
-```
+Keep `/movies/` stable for Film.
 
-Keep `/movies/` stable for Film v1.
+The long-term Home should feel like a cultural publication’s front
+page, not a database dashboard. That is DIRECTION, not the W1 page.
 
 ---
 
@@ -398,7 +473,7 @@ keyboard testing, accessibility-tree inspection, automated audits,
 contrast checks, screen-reader spot testing, zoom and reflow testing,
 and reduced-motion testing.
 
-W5 is verification and remediation, not the first accessibility pass.
+Later verification remediates; it is not the first accessibility pass.
 
 ---
 
@@ -418,8 +493,9 @@ because a facet exists in JSON.
 | Document | Role |
 | --- | --- |
 | PROJECT-VISION.md | Purpose, values, curatorial philosophy, enduring boundaries |
-| Architecture / ADRs | Technical constraints, contracts, system and dependency decisions |
-| Milestone documents | What is next, acceptance criteria, accessibility and performance gates, learning goals |
+| docs/architecture.md | Current technical architecture and implemented constraints |
+| docs/trajectory.md | Direction of travel, staged evolution, deferred decisions, learning trajectory |
+| Milestone documents | What is being built next, gates, and learning goals |
 | Tests / CI | Evidence that implementation matches the decisions |
 | Optional later learning log | Retrospective notes about what can now be explained |
 
@@ -433,7 +509,14 @@ legal terms archive, or performance dashboard.
 This is intentionally a learning project.
 
 The goal is not “learn Astro.” It is to understand why professional
-website decisions are made and to be able to explain them.
+website and digital-curation decisions are made and to be able to
+explain them.
+
+Learning includes collection development, metadata, taxonomy,
+information architecture, semantic HTML, accessibility, SEO,
+performance, provenance, rights awareness, editorial judgment, cultural
+relationships, content strategy, analytics interpretation, and digital
+stewardship.
 
 > Generated implementation should not replace understanding.
 
@@ -461,6 +544,7 @@ Before adding a feature, dependency, taxonomy, or component, ask:
 - Are we turning uncertainty into false certainty?
 - Does omitting it misrepresent the object?
 - What should deliberately remain out?
+- Are we conflating owned, watched, rated, and selected?
 
 **Accessibility**
 
@@ -473,6 +557,7 @@ Before adding a feature, dependency, taxonomy, or component, ask:
 - Does it preserve the public/private boundary?
 - Does it require unnecessary client JavaScript?
 - Does it make future collection domains easier or harder?
+- Does it call a third-party API at page-render time?
 
 **Stewardship**
 
@@ -506,6 +591,7 @@ The project succeeds if it demonstrates:
 - durable and portable web architecture
 - usability for visitors with different levels of subject knowledge
 - thoughtful digital stewardship
+- editorial judgment distinct from inventory and from popularity
 - the ability to explain not only what was built, but why
 
 ---
@@ -514,13 +600,14 @@ The project succeeds if it demonstrates:
 
 v1 will not include:
 
-- Art, Theater, Books, or Publications implementation
-- CMS, authentication, accounts, comments
+- Music, Books, Art, Publications, or Theater implementation
+- CMS, authentication, accounts, or required comments/likes/shares
 - streaming or player
 - personal-state editing or personalization
 - recommendation engine or “AI curator” features
 - admin dashboard
 - direct SQLite access, API server, or SSR as the default architecture
+- live third-party APIs during page render
 - mobile app
 - a generalized cultural-object backend
 - a heavy JS framework (React, Vue, Svelte)
@@ -528,6 +615,8 @@ v1 will not include:
 - image ingestion
 - a generalized search service
 - analytics by default
+- empty collection navigation
+- popularity as a substitute for Featured or From the Archive
 
 Do not expand implementation merely because the vision is broader.
 
@@ -537,7 +626,8 @@ Do not expand implementation merely because the vision is broader.
 
 `movie-catalog` is the Film collection source and publisher. Its public
 web contract is `exports/web/public`. Website code does not belong in
-that repository.
+that repository. Direction for a later selection state belongs in a
+future movie-catalog ADR, not in a silent website filter.
 
 ---
 
@@ -546,7 +636,7 @@ that repository.
 Amend this file when purpose, pillars, or boundaries change.
 
 Do not record tickets, numeric performance budgets, legal boilerplate,
-or hosting vendor details here.
+hosting vendor details, or provider bake-offs here.
 
-Date material revisions in git. Review at the start of W1 and after W5;
-not after every pull request.
+Date material revisions in git. Review when a collection strategy or
+public-membership rule changes; not after every pull request.
