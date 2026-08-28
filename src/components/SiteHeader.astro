@@ -1,6 +1,10 @@
 ---
 const pathname = Astro.url.pathname;
 const homeCurrent = pathname === "/";
+const filmCurrent =
+  pathname === "/movies" ||
+  pathname === "/movies/" ||
+  pathname.startsWith("/movies/");
 const aboutCurrent = pathname === "/about" || pathname === "/about/";
 ---
 
@@ -13,6 +17,11 @@ const aboutCurrent = pathname === "/about" || pathname === "/about/";
       <ul>
         <li>
           <a href="/" aria-current={homeCurrent ? "page" : undefined}>Home</a>
+        </li>
+        <li>
+          <a href="/movies/" aria-current={filmCurrent ? "page" : undefined}>
+            Film
+          </a>
         </li>
         <li>
           <a

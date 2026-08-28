@@ -32,17 +32,20 @@ architecture wins.
 
 **CURRENT**
 
-- W1 is complete.
+- W1 and W2 are complete.
 - The website is a sibling repository, not a subdirectory of
   `movie-catalog`.
 - Stack: Astro static output, TypeScript, pnpm, Vitest, plain CSS with
-  platform tokens.
+  platform tokens, zero client JavaScript.
 - Film input is the public JSON contract only:
   `manifest.json`, `catalog.json`, `stats.json`.
-- The site has an accessible Home / About shell, no client JavaScript,
-  and no Film browse yet.
+- Film browse and detail exist under `/movies/` and `/movies/[slug]/`.
+  Browse is poster-forward, with static alphabetic in-page navigation
+  and an English A/An/The presentation key that does not change displayed
+  titles.
 
-See [`milestones/W1.md`](milestones/W1.md) and
+See [`milestones/W1.md`](milestones/W1.md),
+[`milestones/W2.md`](milestones/W2.md), and
 [`architecture.md`](architecture.md).
 
 ---
@@ -72,6 +75,35 @@ patterns — public snapshot, distinct domain model, accessible
 presentation — without inheriting movie-shaped fields.
 
 Film permalinks stay under `/movies/`.
+
+**DIRECTION**
+
+The next Film-curation need is people and credits, not more inventory
+fields:
+
+- director
+- writing credits (preserve source role distinctions; do not flatten
+  every credit into “writer”)
+- principal cast (source order can be retained while public pages later
+  choose how many names to show)
+- person pages and explicit relationship browsing
+
+Prefer transparent reasons over opaque recommendation:
+
+- More by Alfred Hitchcock
+- Featuring Toshiro Mifune
+- Related Dispatches
+- Music in this Film
+
+rather than a generic “More Like This.”
+
+This requires a deliberate `movie-catalog` public-contract expansion.
+It is not a website-only invention. Exact schema, person URLs, cast
+counts, stills, trailers, and profile images are not locked here.
+
+**DEFERRED / RESEARCH**
+
+Stills and trailers.
 
 ---
 
@@ -213,9 +245,14 @@ search.
 Later, explicit typed relationships (inspired by, connected to,
 adaptation of, and similar curator-owned links).
 
+For Film, the first relationship layer to evaluate is people/credits:
+director, writing, and principal cast, presented as named connections
+rather than a recommendation engine.
+
 **DEFERRED**
 
-No graph database. No implied-relationship engine in v1 Film.
+No graph database. No implied-relationship engine in v1 Film. No person
+pages until the public contract can supply them.
 
 ---
 
@@ -304,13 +341,14 @@ Do not lock the whole future to a fixed W-number plan. Approximate
 order:
 
 1. **CURRENT:** W1 foundation complete.
-2. Film browse and detail next.
-3. Taxonomy and discovery later.
-4. SEO and attribution later.
-5. Dispatches later.
-6. A second collection later, when a real publisher and model exist.
-7. Explicit Film selection-state later, via `movie-catalog`, not a
-   website fiction.
+2. **CURRENT:** Film browse and detail (W2).
+3. Film people/credits and person pages next, after a catalog contract
+   exists — not a website fiction.
+4. Taxonomy and discovery later.
+5. SEO and attribution later.
+6. Dispatches later.
+7. A second collection later, when a real publisher and model exist.
+8. Explicit Film selection-state later, via `movie-catalog`.
 
 W-numbers in existing milestone files remain historical labels. New
 work gets a milestone document when it is actually next.
@@ -331,6 +369,7 @@ work gets a milestone document when it is actually next.
 - collection schemas
 - comments, likes, and shares
 - Theater as a collection
+- stills and trailers
 
 **Anti-goals**
 

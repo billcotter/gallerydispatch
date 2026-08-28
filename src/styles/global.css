@@ -110,6 +110,10 @@ dl + p {
   padding: var(--space-5) var(--page-gutter) var(--space-6);
 }
 
+.page-shell[data-layout="collection"] .page-main {
+  width: min(var(--measure-wide), 100%);
+}
+
 .stat-list {
   display: grid;
   gap: var(--space-3);

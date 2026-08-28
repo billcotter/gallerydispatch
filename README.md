@@ -11,6 +11,7 @@ This repository is the website. It is not the catalog.
 - Architecture: [`docs/architecture.md`](docs/architecture.md)
 - Trajectory: [`docs/trajectory.md`](docs/trajectory.md)
 - W1 (complete): [`docs/milestones/W1.md`](docs/milestones/W1.md)
+- W2 (complete): [`docs/milestones/W2.md`](docs/milestones/W2.md)
 
 Working title: Cultural Archive. Public name is not final.
 
@@ -47,9 +48,8 @@ pnpm preview
 `private/`, `copies.json`, `personal.json`, SQLite files, and extra
 filenames.
 
-## W1 status
+## W2 status
 
-W1 is complete: static Astro foundation, public JSON validation/sync,
-accessible Home/About shell, no client JavaScript. Film browse is not
-in this wave. See [`docs/trajectory.md`](docs/trajectory.md) for
-direction after W1.
+W2 is complete: Film browse at `/movies/`, Film detail at
+`/movies/[slug]/`, poster-forward cards, alphabetic in-page index, zero
+client JavaScript. See [`docs/milestones/W2.md`](docs/milestones/W2.md).

@@ -86,32 +86,55 @@ Astro, TypeScript, `output: 'static'`. Package manager: pnpm
 (`packageManager` in `package.json` is `pnpm@10.33.0`). No adapter, no
 SSR, no React / Vue / Svelte, no Tailwind, no CMS, no API server.
 
-v1 Film routes (later waves; not all exist in W1):
+v1 Film routes:
 
 | Route | Role |
 | --- | --- |
-| `/` | Home (W1: contract-proof public stats snapshot, not the long-term editorial homepage) |
-| `/about/` | Purpose and collection facts |
-| `/movies/` | Film browse (W2) |
-| `/movies/[slug]/` | Film detail (W2) |
-| `/genres/[genre]/` | Genre archive (W3) |
-| `/countries/[country]/` | Country archive (W3) |
-| `/stats/` | Collection facts (W5) |
+| `/` | Home (W1 contract-proof public stats snapshot, plus a Film CTA; not the long-term editorial homepage) |
+| `/about/` | Purpose, Film, and TMDB provenance |
+| `/movies/` | Film browse: poster-forward cards, static alphabetic in-page index |
+| `/movies/[slug]/` | Film detail |
+| `/genres/[genre]/` | Genre archive (later) |
+| `/countries/[country]/` | Country archive (later) |
+| `/stats/` | Collection facts (later) |
 
-W1 navigation is Home and About only, so Film is not a dead link.
-`/movies/` remains the stable Film namespace when W2 lands.
+Navigation is Home · Film · About. `/movies/` is the stable Film
+namespace.
+
+Film browse (CURRENT):
+
+- Native TMDB `<img>` with `srcset` (`w185` / `w342` / `w500`); no
+  `astro:assets` pipeline
+- Browse posters `loading="lazy"`; missing posters use a reserved 2:3
+  fallback
+- Presentation sort/group ignores a leading English A / An / The;
+  displayed titles are unchanged; non-English articles are not stripped
+- In-page `nav` named “Film index”; only populated letter/`#` sections
+- One “Back to Film index” (`#film-index`) and “Back to top” (`#top`)
+  pair per letter section
+- Detail pages return to the specific Film card via
+  `/movies/#film-{slug}` (“Back to {title} in Film”); breadcrumb stays
+  `Film > Title` → `/movies/`; detail pages also include “Back to top”
+- Narrow browse is a centered single column below `28rem`; narrow
+  detail stacks poster above content and centers identity, not long-form
+  text
+- Zero client JavaScript on Home, Film browse, and Film detail
+- Sticky/fixed header and hamburger menus are not used
+
+Film detail hierarchy (CURRENT): identity, descriptive metadata, TMDB
+audience rating as external reception, Sources. Copy, availability,
+codecs, HDR, backdrop, and tagline are not shown.
 
 ---
 
 ## Platform vs Film
 
-Shared later: site header/footer, archive grid pattern, taxonomy
-links, metadata list, breadcrumbs, search status, filter controls.
+Shared: site header/footer, platform tokens, skip link, focus treatment.
 
-Film-specific later: movie card/detail/poster, copy summary, Film
-availability wording.
+Film-specific: `FilmCard`, Film detail record, TMDB poster URLs,
+alphabetic Film index.
 
-Do not invent a universal `CulturalObject` in v1.
+Do not invent a universal `CulturalObject`.
 
 ---
 
@@ -160,7 +183,8 @@ are allowed as a Film-v1 theme.
 Accepted and documented:
 
 - Astro / Vite / TypeScript as build tooling
-- TMDB metadata and hotlinked images
+- TMDB metadata, hotlinked images, and audience ratings (attributed on
+  Film and About; not original cataloguing by this site)
 - Later: a static host
 
 Do not hide these. Do not add a UI framework or Tailwind unless a

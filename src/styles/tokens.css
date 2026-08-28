@@ -19,6 +19,8 @@
   --space-5: 2.5rem;
   --space-6: 4rem;
   --measure: 42rem;
+  --measure-wide: 80rem;
+  --ratio-portrait: 2 / 3;
   --radius: 0.25rem;
   --motion-duration: 150ms;
   --page-gutter: clamp(var(--space-3), 4vw, var(--space-5));

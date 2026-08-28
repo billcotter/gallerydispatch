@@ -6,9 +6,10 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
+  layout?: "article" | "collection";
 }
 
-const { title, description } = Astro.props;
+const { title, description, layout = "article" } = Astro.props;
 const pageTitle =
   title === "Cultural Archive" ? title : `${title} · Cultural Archive`;
 ---
@@ -25,7 +26,7 @@ const pageTitle =
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-shell">
+    <div class="page-shell" id="top" data-layout={layout}>
       <SiteHeader />
       <main id="main-content" tabindex="-1" class="page-main">
         <slot />

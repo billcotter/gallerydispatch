@@ -1,0 +1,134 @@
+---
+import FilmCard from "../../components/FilmCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getStats } from "../../lib/catalog";
+import { getFilmBrowseSections } from "../../lib/film";
+
+const sections = getFilmBrowseSections();
+const stats = getStats();
+const number = new Intl.NumberFormat("en");
+const filmCount = number.format(stats.movie_count);
+const snapshot =
+  stats.year_min !== null && stats.year_max !== null
+    ? `${filmCount} films, ${stats.year_min}–${stats.year_max}`
+    : `${filmCount} films`;
+---
+
+<BaseLayout
+  title="Film"
+  description="Browse the published Film collection in this personal cultural archive."
+  layout="collection"
+>
+  <div class="collection-intro">
+    <h1>Film</h1>
+    <p>
+      The first published collection: {snapshot}. Metadata and posters from{" "}
+      <a href="https://www.themoviedb.org/">TMDB</a>.
+    </p>
+  </div>
+
+  <nav class="film-alpha" aria-label="Film index" id="film-index">
+    <ol>
+      {
+        sections.map((section) => (
+          <li>
+            <a href={`#${section.id}`}>{section.heading}</a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  {
+    sections.map((section) => (
+      <section class="film-letter" aria-labelledby={section.id}>
+        <h2 id={section.id}>{section.heading}</h2>
+        <ul class="film-index">
+          {section.films.map((film) => (
+            <FilmCard
+              slug={film.slug}
+              title={film.title}
+              year={film.year}
+              poster_path={film.poster_path}
+            />
+          ))}
+        </ul>
+        <p class="film-back">
+          <a href="#film-index">Back to Film index</a>
+          <span class="film-back-sep" aria-hidden="true">·</span>
+          <a href="#top">Back to top</a>
+        </p>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .collection-intro {
+    max-width: var(--measure);
+  }
+
+  .film-alpha {
+    margin-top: var(--space-5);
+    scroll-margin-top: var(--space-4);
+  }
+
+  .film-alpha ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .film-letter {
+    margin-top: var(--space-5);
+  }
+
+  .film-letter h2 {
+    scroll-margin-top: var(--space-4);
+  }
+
+  .film-index {
+    display: grid;
+    grid-template-columns: minmax(0, 16rem);
+    justify-content: center;
+    gap: var(--space-4) var(--space-3);
+    margin-top: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 28rem) {
+    .film-index {
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(100%, 9.5rem), 1fr)
+      );
+      justify-content: stretch;
+    }
+  }
+
+  .film-back {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    align-items: baseline;
+    margin-top: var(--space-4);
+  }
+
+  .film-back-sep {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 27.99rem) {
+    .film-back {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .film-back-sep {
+      display: none;
+    }
+  }
+</style>
