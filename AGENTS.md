@@ -1,7 +1,7 @@
 # Agent notes
 
-This is a static cultural-archive website. Film JSON is consumed from
-the sibling `movie-catalog` public publish contract only.
+This is a static website for The Gallery Dispatch. Film JSON is
+consumed from the sibling `movie-catalog` public publish contract only.
 
 Do not add React, Vue, Svelte, Tailwind, SSR adapters, SQLite, or
 private catalog artifacts. See `PROJECT-VISION.md`,

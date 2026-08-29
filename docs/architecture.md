@@ -1,12 +1,12 @@
 # Architecture
 
-This is the current technical architecture for the cultural-archive
+This is the current technical architecture for The Gallery Dispatch
 website. Purpose and curatorial principles live in
 [`PROJECT-VISION.md`](../PROJECT-VISION.md). Direction of travel lives
 in [`docs/trajectory.md`](trajectory.md). Wave-specific work lives in
 [`docs/milestones/`](milestones/).
 
-Working repository name: `cultural-archive-web`. Public site name is
+Working repository name: `gallerydispatch`. Public site name is
 not chosen yet.
 
 ---
@@ -15,7 +15,7 @@ not chosen yet.
 
 ```text
 ~/Projects/movie-catalog/          Film source of truth and publisher
-~/Projects/cultural-archive-web/   Public website (this repository)
+~/Projects/gallerydispatch/        Public website (this repository)
 ```
 
 `movie-catalog` owns SQLite, scan/enrich/probe, personal state, and

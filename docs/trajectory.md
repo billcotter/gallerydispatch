@@ -1,6 +1,6 @@
 # Trajectory
 
-Direction of travel for the cultural-archive website.
+Direction of travel for The Gallery Dispatch.
 
 Purpose and durable values live in [`PROJECT-VISION.md`](../PROJECT-VISION.md).
 Current architecture lives in [`architecture.md`](architecture.md).
