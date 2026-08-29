@@ -1,0 +1,70 @@
+---
+description: Apply when inspecting Penpot designs via MCP for The Gallery Dispatch. Use together with design-integration.mdc.
+---
+
+# Penpot MCP Integration
+
+Use this rule together with `design-integration.mdc` whenever a task involves
+inspecting Penpot via MCP for The Gallery Dispatch.
+
+`design-integration.mdc` governs authority, architecture, accessibility,
+semantics, CSS, JavaScript, SEO, validation, and scope.
+
+This file covers only the Penpot MCP inspection workflow and write constraints.
+
+## Read-only by default
+
+Penpot MCP must be READ-ONLY by default.
+
+Unless the user explicitly requests a Penpot design modification, Cursor must
+not:
+
+- create
+- delete
+- rename
+- move
+- restyle
+- reorganize
+- or otherwise modify Penpot design objects
+
+## Required inspection flow
+
+1. Confirm the intended Penpot file/page is currently focused and MCP connected.
+
+2. Run `high_level_overview` before other Penpot MCP operations when required.
+
+3. Use read-only `execute_code` queries and inspect the smallest relevant
+   scope.
+
+4. Inspect relevant page/board structure, typography, dimensions, position,
+   layout, colors/fills, components, tokens, and libraries as needed.
+
+5. Inspect the existing repository implementation before proposing code
+   changes.
+
+6. Translate Penpot visual intent through `design-integration.mdc`.
+
+## Translation cautions
+
+Do not assume:
+
+- a Penpot board becomes a DOM container
+- Penpot Flex must map literally to CSS Flexbox
+- Penpot Grid must map literally to CSS Grid
+- Penpot-generated HTML/CSS is production-ready
+- Penpot component names determine Astro component boundaries
+- Penpot design tokens must automatically become platform tokens
+
+Treat Penpot Inspect/generated code as explanatory or comparative information,
+not production source code.
+
+## Explicitly requested Penpot writes
+
+When the user explicitly requests a Penpot design modification:
+
+1. describe proposed changes first
+2. make small, reversible changes
+3. modify only requested objects
+4. re-inspect the result
+5. do not simultaneously modify Penpot and application code unless explicitly
+   requested

@@ -1,0 +1,298 @@
+---
+description: Apply when reviewing, implementing, comparing, or translating external design work for The Gallery Dispatch
+---
+
+# Design Integration
+
+Use this rule whenever a task involves reviewing, comparing, translating, or
+implementing external design work for The Gallery Dispatch.
+
+Tool-specific MCP inspection workflows live in:
+
+- `figma-integration.mdc`
+- `penpot-integration.mdc`
+
+Use the relevant tool rule together with this file.
+
+## Authority and translation rules
+
+The design source communicates approved visual intent.
+
+The design source is NOT authoritative for:
+
+- HTML element choice
+- semantic document structure
+- ARIA
+- accessibility behavior
+- data contracts
+- Astro routing
+- SEO metadata
+- application architecture
+- JavaScript requirements
+
+The repository remains authoritative for those concerns.
+
+Do not mechanically translate design frames, boards, or layers into DOM
+elements.
+
+Do not assume:
+
+- design Auto Layout, Flex, or Grid must map literally to CSS Flexbox or CSS
+  Grid
+- every design frame or board becomes a DOM container
+- every visual group becomes an `<article>`
+- layer or object names are literal HTML tags
+- design-tool-generated code is production-ready
+
+Translate design intent into the best semantic web implementation.
+
+## Project technology
+
+The Gallery Dispatch uses:
+
+- Astro
+- TypeScript
+- static generation
+- semantic HTML
+- plain CSS
+- CSS custom-property design tokens
+- zero client JavaScript by default; progressive client JavaScript only when an
+  independently approved interaction requires it
+- pnpm
+- Vitest
+
+Do NOT introduce:
+
+- React
+- Vue
+- Svelte
+- Tailwind
+- CSS-in-JS
+- SSR
+- a UI framework
+- new dependencies
+
+unless an independently approved requirement explicitly calls for them.
+
+## Design-system reuse
+
+Before adding any new value or pattern:
+
+1. inspect existing tokens in `src/styles/tokens.css`;
+2. inspect existing global styles;
+3. inspect relevant Astro components;
+4. inspect design-source variables and tokens when available.
+
+Reuse existing platform tokens and components where they fit.
+
+Do not duplicate tokens or components merely to match a design frame.
+
+Add new platform-level tokens only when the design demonstrates a real reusable
+need.
+
+Do not create premature cross-collection abstractions such as
+`CulturalObjectCard`.
+
+## Accessibility
+
+Accessibility is evaluated in the actual HTML/CSS implementation, not assumed
+from the design source.
+
+Target:
+
+- WCAG 2.1 AA institutional baseline
+- WCAG 2.2 AA design target
+
+Rules:
+
+- native semantic HTML first
+- ARIA only when native semantics cannot express the required meaning/state
+- preserve logical heading hierarchy
+- preserve keyboard navigation
+- visible `:focus-visible`
+- no color-only meaning
+- sufficient contrast
+- usable reflow/zoom
+- meaningful accessible names
+- touch targets appropriate for interactive controls
+- reduced-motion support where motion exists
+
+Do not add ARIA merely because an annotation or design layer suggests it.
+
+For images, determine accessibility behavior from image PURPOSE.
+
+Examples:
+
+- FilmCard poster inside a link already named by visible title/year:
+  `alt=""`
+- Future informative artwork/still:
+  requires a deliberate text-alternative decision
+
+Do not automatically generate descriptive alt text from filenames, titles, or
+AI interpretation.
+
+## Semantic HTML
+
+Infer semantics from content purpose and repository architecture.
+
+Examples already established in The Gallery Dispatch:
+
+- Film browse = semantic `<ul>`
+- Film card = `<li>` containing one ordinary `<a>`
+- no heading per Film card
+- SiteHeader uses native `<header>` / `<nav>`
+- each page has a unique `<main>`
+- breadcrumbs use a separately named `<nav>` because another navigation
+  landmark exists
+
+Preserve these established decisions unless an approved design/architecture
+change explicitly supersedes them.
+
+## CSS translation
+
+Use modern native CSS.
+
+Prefer where appropriate:
+
+- Grid for two-dimensional/repeating collection layouts
+- Flexbox for one-dimensional arrangement
+- `gap`
+- `minmax()`
+- `repeat()`
+- `auto-fit` / `auto-fill`
+- `clamp()`
+- intrinsic sizing
+- logical properties
+- `aspect-ratio`
+- CSS custom properties
+- media/container queries only when justified
+
+Do not reproduce design-source absolute positioning when normal document flow,
+Grid, or Flexbox better expresses the responsive design.
+
+Avoid breakpoint/device assumptions such as "iPhone layout."
+Implement fluid behavior and test narrow widths explicitly.
+
+## Responsive fidelity
+
+A desktop or mobile design frame represents a design checkpoint, not a fixed
+device-only layout.
+
+Compare implementation at the relevant frame widths, but also validate:
+
+- narrow viewport around 320px
+- intermediate widths
+- desktop width
+- 200% zoom
+- long titles
+- missing images
+- sparse metadata
+- wrapped navigation/content
+
+Do not declare responsive implementation complete solely because it matches
+one design screenshot.
+
+## Content/data fidelity
+
+Use real Gallery Dispatch data or realistic edge cases when validating design.
+
+Especially test:
+
+- long Film titles
+- Unicode/original titles
+- missing poster
+- missing synopsis
+- sparse metadata
+- large vote counts
+- responsive text wrapping
+
+Do not replace real dynamic content with fixed placeholder lengths during
+implementation.
+
+## JavaScript
+
+A visual design does not imply client JavaScript.
+
+The Gallery Dispatch uses zero client JavaScript by default; progressive client
+JavaScript only when an independently approved interaction requires it.
+
+Prefer static HTML/CSS.
+
+Do not add JavaScript for:
+
+- basic navigation
+- fragment navigation
+- responsive layout
+- hover/focus styling
+- ordinary disclosure that can be avoided through simpler structure
+
+If interaction truly requires client state, propose the smallest progressive
+enhancement and explain why HTML/CSS alone is insufficient before implementing.
+
+## SEO
+
+The design source may communicate visual/content hierarchy but does not
+determine SEO implementation.
+
+Preserve:
+
+- meaningful page titles
+- one appropriate h1
+- sensible headings
+- crawlable `<a href>` links
+- stable Astro routes
+- null-safe descriptions
+- semantic content structure
+
+Do not infer SEO completion from visual fidelity.
+
+## Before implementation
+
+1. Inspect the design source using the relevant tool-specific rule
+   (`figma-integration.mdc` or `penpot-integration.mdc`).
+2. Inspect existing repository components, CSS, tokens, and architecture
+   before writing code.
+3. Only begin implementation after both:
+   - relevant structured design context; and
+   - sufficient visual/layout context from the design source
+   have been reviewed.
+
+## Validation before completion
+
+After implementing a design-driven change:
+
+1. compare the built UI against the design screenshot;
+2. confirm visual hierarchy, spacing, sizing, typography, and responsive intent;
+3. run:
+   - `pnpm test`
+   - `pnpm check`
+   - `pnpm build`
+   - `git diff --check`
+4. confirm generated client JavaScript has not increased unless explicitly
+   approved;
+5. perform or request manual browser checks for:
+   - keyboard operation
+   - focus visibility
+   - narrow viewport
+   - 200% zoom
+   - screen-reader semantics where relevant.
+
+Do not mark a change complete solely because it visually matches the design
+source.
+
+## Scope discipline
+
+When implementing a design frame, change only what is necessary for the approved
+design.
+
+Do not use design work as permission to:
+- modify movie-catalog
+- change the public JSON contract
+- implement future collections
+- add taxonomy
+- add credits/person data
+- add stills/trailers
+- add analytics
+- add frameworks/dependencies
+
+unless those changes are separately approved.
