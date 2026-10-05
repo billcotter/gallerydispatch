@@ -16,10 +16,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@picocss/pico": "^2.1.1",
     "astro": "^7.2.6"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

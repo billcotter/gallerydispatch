@@ -1,0 +1,117 @@
+---
+import FilmCardTest from "../components/FilmCardTest.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getMovies } from "../lib/catalog";
+import type { WebMovie } from "../types/catalog";
+
+const films = getMovies();
+const withPoster = films.filter((film) => film.poster_path);
+const missingPoster = films.find((film) => !film.poster_path);
+
+const longTitle = [...withPoster].sort(
+  (left, right) => right.title.length - left.title.length,
+)[0];
+
+const specialTitle = withPoster.find(
+  (film) =>
+    film.slug !== longTitle?.slug &&
+    (/[^\u0000-\u007F]/.test(film.title) || film.title.length <= 4),
+);
+
+const used = new Set(
+  [longTitle?.slug, specialTitle?.slug, missingPoster?.slug].filter(Boolean),
+);
+
+const normalTitle = withPoster.find(
+  (film) =>
+    !used.has(film.slug) && film.title.length >= 8 && film.title.length <= 24,
+);
+
+type Specimen = {
+  label: string;
+  film: WebMovie;
+};
+
+const specimens: Specimen[] = [];
+
+if (normalTitle) {
+  specimens.push({
+    label: "Normal poster and title",
+    film: normalTitle,
+  });
+}
+
+if (longTitle) {
+  specimens.push({
+    label: "Long title",
+    film: longTitle,
+  });
+}
+
+if (specialTitle) {
+  specimens.push({
+    label: "Short or special-character title",
+    film: specialTitle,
+  });
+}
+
+if (missingPoster) {
+  specimens.push({
+    label: "Missing poster",
+    film: missingPoster,
+  });
+}
+---
+
+<BaseLayout
+  title="FilmCard test"
+  description="Isolated FilmCard experiment from the Penpot visual design, using published Film catalog records."
+  layout="collection"
+>
+  <h1>FilmCard test</h1>
+  <p>
+    Isolated specimen of the Penpot FilmCard visual intent. This route is not
+    the production Film browse. Cards use published catalog records. Director
+    is not in the public catalog, so metadata shows the release year only.
+  </p>
+
+  <ul class="specimen-list">
+    {
+      specimens.map((specimen) => (
+        <li>
+          <p class="specimen-label">{specimen.label}</p>
+          <ul class="specimen-cards">
+            <FilmCardTest
+              slug={specimen.film.slug}
+              title={specimen.film.title}
+              year={specimen.film.year}
+              poster_path={specimen.film.poster_path}
+              tmdb_rating={specimen.film.tmdb_rating}
+            />
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .specimen-list {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .specimen-label {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .specimen-cards {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+</style>

@@ -1,0 +1,390 @@
+---
+import FilmCard from "../../components/FilmCard.astro";
+import { getMovieBySlug, getStats } from "../../lib/catalog";
+import {
+  formatJoinedList,
+  formatRuntime,
+  getFilmPosterSources,
+  getFilmsForBrowse,
+  shouldShowOriginalTitle,
+} from "../../lib/film";
+import type { WebMovie } from "../../types/catalog";
+import "../../styles/tokens.css";
+import "@picocss/pico/css/pico.conditional.min.css";
+import "../../styles/pico-test.css";
+
+const films = getFilmsForBrowse();
+const stats = getStats();
+const withPoster = films.filter((film) => film.poster_path);
+const withoutPoster = films.find((film) => !film.poster_path);
+const longTitle = [...withPoster].sort(
+  (left, right) => right.title.length - left.title.length,
+)[0];
+
+const picoCards: WebMovie[] = [];
+
+if (longTitle) {
+  picoCards.push(longTitle);
+}
+
+if (withoutPoster && withoutPoster.slug !== longTitle?.slug) {
+  picoCards.push(withoutPoster);
+}
+
+for (const film of withPoster) {
+  if (picoCards.length >= 3) {
+    break;
+  }
+
+  if (!picoCards.some((card) => card.slug === film.slug)) {
+    picoCards.push(film);
+  }
+}
+
+const featured =
+  films.find((film) => film.overview && film.poster_path) ?? films[0];
+const featuredPoster = featured
+  ? getFilmPosterSources(featured.poster_path, { srcSize: "w500" })
+  : null;
+const featuredOriginal = featured
+  ? shouldShowOriginalTitle(featured.title, featured.original_title)
+    ? featured.original_title
+    : null
+  : null;
+const featuredRuntime = featured ? formatRuntime(featured.runtime) : null;
+const featuredGenres = featured ? formatJoinedList(featured.genres) : null;
+const tableFilms = films.slice(0, 4);
+const genreOptions = stats.genres.map((genre) => genre.name);
+const editorialCards = picoCards.slice(0, 2);
+const solaris = getMovieBySlug("solaris-1972-593");
+const experiment2Films: WebMovie[] = [];
+
+if (solaris) {
+  experiment2Films.push(solaris);
+}
+
+for (const film of picoCards) {
+  if (experiment2Films.length >= 3) {
+    break;
+  }
+
+  if (!experiment2Films.some((card) => card.slug === film.slug)) {
+    experiment2Films.push(film);
+  }
+}
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Isolated Pico.css experiment for The Gallery Dispatch. Evaluation only."
+    />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+    <title>Pico.css Experiment · The Gallery Dispatch</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="pico pico-test-header">
+      <div class="pico-test-shell">
+        <nav aria-label="Experiment">
+          <ul>
+            <li>
+              <a href="/pico-test/">The Gallery Dispatch</a>
+            </li>
+          </ul>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/movies/">Film</a></li>
+            <li><a href="/about/">About</a></li>
+            <li>
+              <a href="/pico-test/" aria-current="page">Pico experiment</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <div class="pico pico-test-shell">
+        <hgroup>
+          <h1>Pico.css Experiment</h1>
+          <p>The Gallery Dispatch</p>
+        </hgroup>
+        <p>
+          This page is an isolated evaluation of Pico.css as a possible
+          baseline. It is not a production route. Film data comes from the
+          published catalog.
+        </p>
+
+        <h2>Long-form prose</h2>
+        <p>
+          The Gallery Dispatch presents films with care. Metadata and posters
+          come from{" "}
+          <a href="https://www.themoviedb.org/">TMDB</a>.
+          Pico is being tested for headings, links, forms, and tables — not as
+          an authority over HTML, accessibility, or the Film contract.
+        </p>
+        {
+          featured?.overview ? (
+            <p>{featured.overview}</p>
+          ) : (
+            <p>
+              Published Film records include titles, years, and synopses when
+              the catalog provides them. Missing synopsis is a real edge case
+              and is not replaced with placeholder copy.
+            </p>
+          )
+        }
+        <p>
+          <a href="/movies/">Browse the Film collection</a>
+        </p>
+
+        <h2>Film cards</h2>
+        <p>
+          Established Film semantics: a list of cards, each one <code>li</code>
+          {" "}containing a single <code>a</code>, with no heading per card.
+        </p>
+        <ul class="pico-test-films">
+          {
+            picoCards.map((film) => {
+              const poster = getFilmPosterSources(film.poster_path);
+
+              return (
+                <li>
+                  <a href={`/movies/${film.slug}/`}>
+                    {poster ? (
+                      <span class="pico-test-poster">
+                        <img
+                          src={poster.src}
+                          srcset={poster.srcset}
+                          sizes="(max-width: 28rem) 16rem, (max-width: 60rem) 22vw, 185px"
+                          width="342"
+                          height="513"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </span>
+                    ) : (
+                      <span class="pico-test-poster" aria-hidden="true">
+                        <span class="pico-test-poster-fallback"></span>
+                      </span>
+                    )}
+                    <span class="pico-test-film-title">{film.title}</span>
+                    <span>{film.year}</span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+
+        <h2>Film metadata</h2>
+        {
+          featured ? (
+            <>
+              {featuredPoster ? (
+                <p class="pico-test-featured-poster">
+                  <img
+                    src={featuredPoster.src}
+                    srcset={featuredPoster.srcset}
+                    sizes="(min-width: 40rem) 12rem, min(70vw, 20rem)"
+                    width="500"
+                    height="750"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </p>
+              ) : null}
+              <p>
+                <a href={`/movies/${featured.slug}/`}>
+                  {featured.title} ({featured.year})
+                </a>
+              </p>
+              {featuredOriginal ? <p>{featuredOriginal}</p> : null}
+              {featured.overview ? <p>{featured.overview}</p> : null}
+              {featuredRuntime || featuredGenres ? (
+                <dl>
+                  {featuredRuntime ? (
+                    <div>
+                      <dt>Runtime</dt>
+                      <dd>{featuredRuntime}</dd>
+                    </div>
+                  ) : null}
+                  {featuredGenres ? (
+                    <div>
+                      <dt>Genres</dt>
+                      <dd>{featuredGenres}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+              ) : null}
+            </>
+          ) : (
+            <p>No published films are available for this experiment.</p>
+          )
+        }
+
+        <h2>Controls</h2>
+        <p>
+          Native button and form controls. Submitting returns to this
+          experiment page and does not filter the catalog.
+        </p>
+        <form id="pico-filter" action="/pico-test/" method="get">
+          <p>
+            <label for="pico-query">Title contains</label>
+            <input
+              id="pico-query"
+              name="q"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </p>
+          <p>
+            <label for="pico-genre">Genre</label>
+            <select id="pico-genre" name="genre">
+              <option value="">Any</option>
+              {genreOptions.map((genre) => (
+                <option value={genre}>{genre}</option>
+              ))}
+            </select>
+          </p>
+          <p>
+            <button type="submit">Search films</button>
+          </p>
+        </form>
+        <p>
+          <button type="reset" form="pico-filter">Reset</button>
+        </p>
+
+        <h2>Catalog sample</h2>
+        <div class="pico-test-table">
+          <table>
+            <caption>Four films from the published catalog</caption>
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Year</th>
+                <th scope="col">Runtime</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                tableFilms.map((film) => (
+                  <tr>
+                    <th scope="row">
+                      <a href={`/movies/${film.slug}/`}>{film.title}</a>
+                    </th>
+                    <td>{film.year}</td>
+                    <td>{formatRuntime(film.runtime) ?? "Not published"}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <section class="pico-test-shell">
+        <div class="pico">
+          <h2 id="pico-compare-heading">Comparison</h2>
+          <p>
+            The same catalog, two styling sources. Pico is not used on the
+            editorial block.
+          </p>
+        </div>
+        <div class="pico-test-compare">
+          <div class="pico">
+            <h3>A. Pico baseline</h3>
+            <p>
+              Conventional content using Pico’s conditional styles. Useful for
+              prosaic structure: headings, paragraphs, and links.
+            </p>
+            <p>
+              <a href="/movies/">Browse the Film collection</a>
+            </p>
+          </div>
+          <div class="pico-test-editorial">
+            <h3>B. Gallery Dispatch editorial</h3>
+            <p>
+              Warm archive surface, accent links, and the existing Film card
+              component. This is where identity still lives in project CSS.
+            </p>
+            <p>
+              <a href="/movies/">Browse the Film collection</a>
+            </p>
+            <ul class="pico-test-films">
+              {
+                editorialCards.map((film) => (
+                  <FilmCard
+                    slug={film.slug}
+                    title={film.title}
+                    year={film.year}
+                    poster_path={film.poster_path}
+                  />
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="pico pico-test-shell">
+        <h2>Experiment 2 — Penpot Film Card</h2>
+        <p>
+          Visual target: the crude Film Card on Penpot page
+          “Film Card — Pico Test 01”. Semantics stay Gallery Dispatch Film
+          browse rules. Catalog data is used for title, year, poster, and
+          detail links. Penpot showed director on the same line as the year;
+          director is not in the public catalog, so it is not invented here.
+        </p>
+        <ul class="penpot-film-list">
+          {
+            experiment2Films.map((film) => {
+              const poster = getFilmPosterSources(film.poster_path);
+
+              return (
+                <li class="penpot-film-card">
+                  <a href={`/movies/${film.slug}/`}>
+                    {poster ? (
+                      <span class="penpot-film-poster">
+                        <img
+                          src={poster.src}
+                          srcset={poster.srcset}
+                          sizes="258px"
+                          width="258"
+                          height="390"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </span>
+                    ) : (
+                      <span class="penpot-film-poster" aria-hidden="true">
+                        <span class="penpot-film-poster-fallback"></span>
+                      </span>
+                    )}
+                    <span class="penpot-film-title">{film.title}</span>
+                    <span class="penpot-film-meta">{film.year}</span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
